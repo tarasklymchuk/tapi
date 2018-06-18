@@ -1,2 +1,0 @@
-# tapi
-typescript restfull api
