@@ -1,65 +1,32 @@
-import {Router, Request, Response, NextFunction} from 'express';
+import {heroController} from "../Services/Controllers/heroController";
+import {Routes} from "./Routes";
 
-const Heroes = require('../../Data/heroes.json');
+export class HeroRouter extends Routes {
+    private controller: heroController;
 
-export class HeroRouter {
-    router: Router
-
-    /**
-     * Initialize the HeroRouter
-     */
     constructor() {
-        this.router = Router();
-        this.init();
+        super();
+        this.controller = new heroController();
     }
 
     /**
-     * GET all Heroes.
+     * init routes
      */
-    public getAll(req: Request, res: Response, next: NextFunction) {
-        res.send(Heroes);
+    protected init() {
+        this.router.get('/', this.controller.getAll);
+        this.router.get('/:id', this.controller.getOne);
     }
 
     /**
-     * get one hero
+     * return routes
      *
-     * @param {e.Request} req
-     * @param {e.Response} res
-     * @param {e.NextFunction} next
+     * @returns {e.Router}
      */
-    public getOne(req: Request, res: Response, next: NextFunction) {
-        let query = parseInt(req.params.id);
-        let hero = Heroes.find(hero => hero.id === query);
-        if (hero) {
-            res.status(200)
-                .send({
-                    message: 'Success',
-                    status: res.status,
-                    hero
-                });
-        }
-        else {
-            res.status(404)
-                .send({
-                    message: 'No hero found with the given id.',
-                    status: res.status
-                });
-        }
+    public routes() {
+        this.init();
+        return this.router;
     }
-
-    /**
-     * Take each handler, and attach to one of the Express.Router's
-     * endpoints.
-     */
-    init() {
-        this.router.get('/', this.getAll);
-        this.router.get('/:id', this.getOne);
-    }
-
 }
 
-// Create the HeroRouter, and export its configured Express.Router
 const heroRoutes = new HeroRouter();
-heroRoutes.init();
-
-export default heroRoutes.router;
+export default heroRoutes.routes();
