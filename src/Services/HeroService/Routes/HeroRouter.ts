@@ -1,6 +1,6 @@
 import {Router} from 'express';
-import {RouteService} from '../bootstrap/services/Routes/RouteService'
-import {heroController} from "../Services/Controllers/heroController";
+import {RouteService} from '../../../bootstrap/services/Routes/RouteService'
+import {heroController} from "../Controllers/heroController";
 
 class HeroRouter extends RouteService {
     public controller: heroController = new heroController();

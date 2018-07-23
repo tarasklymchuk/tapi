@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction} from 'express';
 import {Controller} from "./Controller";
 
-const Heroes = require('../../../Data/heroes.json');
+const Heroes = require('../../../../Data/heroes.json');
 
 export class heroController extends Controller {
     /**

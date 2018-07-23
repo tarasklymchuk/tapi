@@ -1,5 +1,5 @@
 import * as express from 'express';
-import {heroRoute} from "../../../Routes/HeroRouter";
+import {heroRoute} from "../../../Services/HeroService/Routes/HeroRouter";
 import * as fs from 'fs';
 
 class BootRoute {
