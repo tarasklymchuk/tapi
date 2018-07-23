@@ -1,19 +1,19 @@
 import * as express from 'express';
 import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
-import heroRouter from "./Routes/heroRouter";
+import {BootRoutes} from './services/Routes/BootRoute'
 
 // Creates and configures an ExpressJS web server.
 class App {
-
     // ref to Express instance
     public express: express.Application;
+    public bootRouter = BootRoutes;
 
     //Run configuration methods on the Express instance.
     constructor() {
         this.express = express();
         this.middleware();
-        this.routes();
+        this.bootRouter.onLoad(this.express);
     }
 
     // Configure Express middleware.
@@ -21,20 +21,6 @@ class App {
         this.express.use(logger('dev'));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({extended: false}));
-    }
-
-    // Configure API endpoints.
-    private routes(): void {
-        let router = express.Router();
-        router.get('/', (req, res, next) => {
-            res.json({
-                message: 'Hello World!'
-            });
-        });
-        this.express.use('/', router);
-        // placeholder route handler
-        this.express.use('/api/v1/heroes', heroRouter);
-
     }
 }
 
