@@ -1,17 +1,17 @@
-import {Router} from 'express';
 import {RouteService} from '../../../bootstrap/services/Routes/RouteService'
 import {heroController} from "../Controllers/heroController";
 
-class HeroRouter extends RouteService {
+class ApiRouter extends RouteService {
     public controller: heroController = new heroController();
+    protected prefix = '/api/v1/heroes';
 
     /**
      * init routes
      */
     protected routes() {
-        this.router.get('/', this.controller.index);
-        this.router.get('/:id', this.controller.view);
+        this.router.get(this.prefix + '/', this.controller.index);
+        this.router.get(this.prefix + '/:id', this.controller.view);
     }
 }
 
-export const heroRoute: Router = (new HeroRouter()).onRoutes();
+export const apiRouter = (new ApiRouter()).boot();

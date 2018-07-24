@@ -1,21 +1,22 @@
 import * as express from 'express';
-import {heroRoute} from "../../../Services/HeroService/Routes/HeroRouter";
 import * as fs from 'fs';
 
 class BootRoute {
 
+    protected path = './src/Services/';
+
     onLoad(app): void {
-        let router = express.Router();
-        router.get('/', (req, res, next) => {
-            res.json({
-                message: 'Hello World!'
+        fs.readdir(this.path, (err, files) => {
+            files.forEach((file) => {
+                let newPath = '../../../Services/' + file;
+                let router = require(newPath + "/Routes/apiRouter");
+                app.use(router.apiRouter);
+                console.log('Load routes for ' + file.match(/([A-Z]?[^A-Z]*)/g).join(" ") + '\t\t\t OK');
             });
         });
-        app.use('/', router);
-        // placeholder route handler
-        app.use('/api/v1/heroes', heroRoute);
-
     }
+
+
 }
 
 export const BootRoutes: BootRoute = new BootRoute();

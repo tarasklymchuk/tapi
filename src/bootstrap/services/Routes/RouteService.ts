@@ -3,6 +3,7 @@ import {RouteServiceInterface} from '../../interfaces/RouteServiceInterface'
 
 export class RouteService implements RouteServiceInterface {
     public router;
+    protected prefix = '/';
 
     /**
      * init express route callable
@@ -16,8 +17,10 @@ export class RouteService implements RouteServiceInterface {
      *
      * @returns {e.Router}
      */
-    public onRoutes() {
+    public boot(): Router {
         this.routes();
+        // this.apiPrefix();
+        this.middleware();
         return this.router;
     }
 
@@ -25,6 +28,14 @@ export class RouteService implements RouteServiceInterface {
      * Base route method for set route
      */
     protected routes() {
+
+    }
+
+    // protected apiPrefix():Router {
+    //    return this.router.use(this.prefix, this.router);
+    // }
+
+    protected middleware() {
 
     }
 }
