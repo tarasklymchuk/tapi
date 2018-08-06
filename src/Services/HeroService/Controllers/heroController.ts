@@ -1,14 +1,16 @@
-import {Request, Response, NextFunction} from 'express';
-import {Controller} from "./Controller";
+import {Request, Response} from "express";
+import {Param, Get, Req, Res, JsonController} from "routing-controllers";
 
 const Heroes = require('../../../../Data/heroes.json');
 
-export class heroController extends Controller {
+@JsonController()
+export class heroController {
     /**
      * GET all Heroes.
      */
-    public index(req: Request, res: Response, next: NextFunction) {
-        res.send(Heroes);
+    @Get("/heroes")
+    public index(@Req() request: Request, @Res() response: Response) {
+        return response.send(Heroes);
     }
 
     /**
@@ -18,22 +20,22 @@ export class heroController extends Controller {
      * @param {Response} res
      * @param {e.NextFunction} next
      */
-    public view(req: Request, res: Response, next: NextFunction) {
-        let query = parseInt(req.params.id);
-        let hero = Heroes.find(hero => hero.id === query);
+    @Get("/heroes/:id")
+    public view(@Param("id") id: number, @Req() request: Request, @Res() response: Response) {
+        let hero = Heroes.find((item) => item.id === id);
         if (hero) {
-            res.status(200)
+            return response.status(200)
                 .send({
                     message: 'Success',
-                    status: res.status,
+                    status: response.status,
                     hero
                 });
         }
         else {
-            res.status(404)
+            response.status(404)
                 .send({
                     message: 'No hero found with the given id.',
-                    status: res.status
+                    status: response.status
                 });
         }
     }

@@ -2,7 +2,8 @@ import * as mocha from 'mocha';
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
-import app from '../src/bootstrap/App';
+import {log} from "util";
+import app = require("../src/index");
 
 chai.use(chaiHttp);
 const expect = chai.expect;
@@ -22,7 +23,7 @@ describe('GET api/v1/heroes', () => {
     it('should include Wolverine', () => {
         return chai.request(app).get('/api/v1/heroes')
             .then(res => {
-                let Wolverine = res.body.find(hero => hero.name === 'Wolverine');
+                let Wolverine = res.body.find((hero) => hero.name === 'Wolverine');
                 expect(Wolverine).to.exist;
                 expect(Wolverine).to.have.all.keys([
                     'id',
