@@ -14,7 +14,7 @@ useContainer(Container);
  *
  * @type {number | string | boolean}
  */
-const port = normalizePort(process.env.PORT || 3000);
+let port = normalizePort(process.env.PORT || 3000);
 
 /**
  * We create a new express server instance.
@@ -27,7 +27,7 @@ let server = createExpressServer(App);
  *
  * @type {module:http.Server}
  */
-const Application = http.createServer(server);
+let Application = http.createServer(server);
 
 /**
  * Start the express app.
