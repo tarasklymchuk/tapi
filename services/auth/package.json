@@ -1,0 +1,11 @@
+{
+  "name": "autorization",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.d.ts",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Taras Klymchuk",
+  "license": "ISC"
+}
